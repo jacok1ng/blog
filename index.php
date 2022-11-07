@@ -1,5 +1,5 @@
 <?php
-  $MAX_DISPLAYED_POSTS = 5;
+  $MAX_DISPLAYED_POSTS = 4;
   $postsPage = 0;
 
   class Post{
@@ -39,9 +39,30 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
+    <script src="./app.js" defer></script>
     <title>Eryk Dąbek Blog</title>
   </head>
   <body>
+    <div class="backdrop">
+      <div class="comment-modal">
+        <form action="comment.php"  method="post">
+          <div class="input-label">
+            <label for="nick">Nick:</label>
+            <input name="nick" type="text" label="Nick"/>
+          </div>
+          <div class="input-label">
+            <label for="email">Email:</label>
+            <input name="email" type="email" label="Email"/>
+          </div>
+          <div class="input-label">
+            <label for="email">Tresc:</label>
+            <textarea name="tresc" label="Tresc"></textarea>
+          </div>
+          <button class="styled-button margin-top-20" type="submit">Wyslij</button>
+          <button class="styled-button close-btn margin-top-10">Zamknij</button>
+        </form>
+      </div>
+    </div>
     <header>
       <div class="header-content">
         <img class="header-logo" src="assets/logo-white.png" />
@@ -75,6 +96,7 @@
               echo '<div class="main-post-info">';
               echo '<div class="main-post-title">', $posts[$i + $postsOffset]->title, '</div>';
               echo '<div class="main-post-desc">', $posts[$i + $postsOffset]->description, '</div>';
+              echo '<div class="add-comment">Dodaj komentarz</div>';
               echo '</div>';
               echo '</div>';
             }
@@ -89,15 +111,6 @@
               echo '</ul>';
             }
           ?>
-
-          <div class="main-post">
-          <img src="./assets/post.png" alt="">
-          <div class="main-post-info">
-          <div class="main-post-title">Title</div>
-          <div class="main-post-desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Non, reprehenderit?</div>
-          </div>
-          </div>
-          
         </div>
       </div>
       <div class="last-posts rounded-corners">
