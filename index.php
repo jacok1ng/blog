@@ -65,18 +65,18 @@
           </form>
         </div>
         <div id="register-form">
-          <form  action="register.php" method="post">
+          <form id="register-formula" action="register.php" method="post">
             <div class="input-label">
               <label for="nick">Nick:</label>
-              <input name="nick" type="text" label="Nick"/>
+              <input id="reg-nick" name="nick" type="text" label="Nick"/>
             </div>
             <div class="input-label">
               <label for="email">Email:</label>
-              <input name="email" type="email" label="Email"/>
+              <input id="reg-email" name="email" type="email" label="Email"/>
             </div>
             <div class="input-label">
               <label for="password">Haslo:</label>
-              <input name="password" type="password" label="password"/>
+              <input id="reg-password" name="password" type="password" label="password"/>
             </div>
             <div id="captcha-wrapper">
               <div class="captcha-element">
@@ -102,7 +102,7 @@
               <label for="captcha-input">Podaj numer kratki z czerwonym kwadratem:</label>
               <input name="captcha-input" type="text" label="captcha-input"/>
             </div>
-            <button class="styled-button margin-top-20" type="submit">Wyslij</button>
+            <button id="register-btn" class="styled-button margin-top-20" type="submit">Wyslij</button>
             <button class="styled-button close-btn margin-top-10">Zamknij</button>
           </form>
         </div>
