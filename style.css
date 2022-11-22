@@ -184,7 +184,7 @@ a {
   font-size: 1.15rem;
 }
 
-.comment-modal {
+.modal {
   position: absolute;
   width: 450px;
   margin-left: auto;
@@ -197,6 +197,31 @@ a {
   transform: translate(-50%, -50%);
   padding: 2rem 5rem;
   box-shadow: 5px 5px 25px black;
+}
+
+#comment-form {
+  display: none;
+}
+
+#register-form {
+  display: none;
+}
+
+.captcha-element {
+  max-width: 213px;
+}
+
+.captcha-image {
+  max-height: 70px;
+  max-width: 70px;
+  object-fit: contain;
+}
+
+#captcha-wrapper {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .comment-modal > form {
@@ -253,6 +278,10 @@ textarea {
   width: 100vw;
   height: 100vh;
   z-index: 9;
+}
+
+.clickable {
+  cursor: pointer;
 }
 
 ::-webkit-scrollbar {

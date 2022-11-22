@@ -1,4 +1,5 @@
 <?php
+  session_start();
   $MAX_DISPLAYED_POSTS = 4;
   $postsPage = 0;
 
@@ -44,23 +45,67 @@
   </head>
   <body>
     <div class="backdrop">
-      <div class="comment-modal">
-        <form action="comment.php"  method="post">
-          <div class="input-label">
-            <label for="nick">Nick:</label>
-            <input name="nick" type="text" label="Nick"/>
-          </div>
-          <div class="input-label">
-            <label for="email">Email:</label>
-            <input name="email" type="email" label="Email"/>
-          </div>
-          <div class="input-label">
-            <label for="email">Tresc:</label>
-            <textarea name="tresc" label="Tresc"></textarea>
-          </div>
-          <button class="styled-button margin-top-20" type="submit">Wyslij</button>
-          <button class="styled-button close-btn margin-top-10">Zamknij</button>
-        </form>
+      <div class="modal">
+        <div id="comment-form">
+          <form  action="comment.php"  method="post">
+            <div class="input-label">
+              <label for="nick">Nick:</label>
+              <input name="nick" type="text" label="Nick"/>
+            </div>
+            <div class="input-label">
+              <label for="email">Email:</label>
+              <input name="email" type="email" label="Email"/>
+            </div>
+            <div class="input-label">
+              <label for="email">Tresc:</label>
+              <textarea name="tresc" label="Tresc"></textarea>
+            </div>
+            <button class="styled-button margin-top-20" type="submit">Wyslij</button>
+            <button class="styled-button close-btn margin-top-10">Zamknij</button>
+          </form>
+        </div>
+        <div id="register-form">
+          <form  action="register.php" method="post">
+            <div class="input-label">
+              <label for="nick">Nick:</label>
+              <input name="nick" type="text" label="Nick"/>
+            </div>
+            <div class="input-label">
+              <label for="email">Email:</label>
+              <input name="email" type="email" label="Email"/>
+            </div>
+            <div class="input-label">
+              <label for="password">Haslo:</label>
+              <input name="password" type="password" label="password"/>
+            </div>
+            <div id="captcha-wrapper">
+              <div class="captcha-element">
+                <?php
+                  $random = rand(0, 8);
+                  $array = array();
+
+                  for($i = 0; $i < 9; $i++){
+                    if($i == $random)
+                      array_push($array, '<img src="./assets/red.png" class="captcha-image" alt="red"/>');
+                    else
+                      array_push($array, '<img src="./assets/blue.png" class="captcha-image" alt="blue"/>');
+                  }
+
+                  $_SESSION['captcha-value'] = $random;
+                  for($i = 0; $i < 9; $i++)
+                      echo $array[$i];
+                  
+                ?>
+              </div>
+            </div>
+            <div class="input-label margin-top-20">
+              <label for="captcha-input">Podaj numer kratki z czerwonym kwadratem:</label>
+              <input name="captcha-input" type="text" label="captcha-input"/>
+            </div>
+            <button class="styled-button margin-top-20" type="submit">Wyslij</button>
+            <button class="styled-button close-btn margin-top-10">Zamknij</button>
+          </form>
+        </div>
       </div>
     </div>
     <header>
@@ -76,6 +121,7 @@
           <li><a href="#">JavaScript</a></li>
           <li><a href="#">React</a></li>
           <li><a href="#">CSS</a></li>
+          <li id="register" class="clickable">Rejestracja</li>
         </ul>
       </nav>
       <div class="content rounded-corners">
