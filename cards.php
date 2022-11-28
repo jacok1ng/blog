@@ -210,11 +210,6 @@
         </div>
         <div class="buttons">
           <a href="./cards.php?state=1"><button class="styled-button">Restart</button></a>
-          <!-- <a href="./cards.php?state=2"><button class="styled-button">Następna karta</button></a>
-          <a href="./cards.php?state=3"><button class="styled-button">Stop</button></a> -->
-          <!-- <div class="lose">
-            <p>Przegrałeś! Spróbuj ponownie!</p>
-          </div> -->
           <?php
             displayButtons();
           ?>
