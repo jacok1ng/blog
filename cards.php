@@ -41,13 +41,27 @@
     } 
   }
   shuffle($cards);
+  if($_SESSION["CARD_STATUS"] != "INIT") {
+    $cards = $_SESSION["CARDS"];
+    $krupierWynik = empty($_SESSION["KRUPIER_WYNIK"]) ? 0 : $_SESSION["KRUPIER_WYNIK"];
+    $graczWynik = empty($_SESSION["GRACZ_WYNIK"]) ? 0 : $_SESSION["GRACZ_WYNIK"];
+    $krupierKarty = $_SESSION["KRUPIER_KARTY"];
+    $graczKarty = $_SESSION["GRACZ_KARTY"];
+  }
+  else {
+    array_push($krupierKarty, $cards[0]);
+    array_push($krupierKarty, $cards[2]);
 
-  
-  array_push($krupierKarty, $cards[0]);
-  array_push($krupierKarty, $cards[2]);
+    array_push($graczKarty, $cards[1]);
+    array_push($graczKarty, $cards[3]);
 
-  array_push($graczKarty, $cards[1]);
-  array_push($graczKarty, $cards[3]);
+    $_SESSION["CARDS"] = $cards;
+    $_SESSION["CARD_STATUS"] = "STARTED";
+    $_SESSION["GRACZ_WYNIK"] = 0;
+    $_SESSION["GRACZ_KARTY"] = $graczKarty;
+    $_SESSION["KRUPIER_WYNIK"] = 0;
+    $_SESSION["KRUPIER_KARTY"] = $krupierKarty;
+  }
 ?>
 
 <!DOCTYPE html>
@@ -76,9 +90,8 @@
           </div>
           <div class="cards">
             <?php
-              for($i = 0; $i < count($krupierKarty); $i++){
+              for($i = 0; $i < count($krupierKarty); $i++)
                 echo "<img src='./assets/cards/", $krupierKarty[$i], "' alt='card' class='card'>";
-              }
             ?>
           </div>
         </div>
@@ -89,13 +102,9 @@
           </div>
           <div class="cards">
             <?php
-              for($i = 0; $i < count($graczKarty); $i++){
+              for($i = 0; $i < count($graczKarty); $i++)
                 echo "<img src='./assets/cards/", $graczKarty[$i], "' alt='card' class='card'>";
-              }
             ?>
-            <!-- <img src="./assets/cards/karo10.png" alt="card" class="card">
-            <img src="./assets/cards/karo10.png" alt="card" class="card">
-            <img src="./assets/cards/karo10.png" alt="card" class="card"> -->
           </div>
         </div>
         <div class="buttons">

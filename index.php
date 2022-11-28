@@ -1,5 +1,6 @@
 <?php
   session_start();
+  $_SESSION["CARD_STATUS"] = "INIT";
   $MAX_DISPLAYED_POSTS = 4;
   $postsPage = 0;
 
@@ -122,6 +123,7 @@
           <li><a href="#">React</a></li>
           <li><a href="#">CSS</a></li>
           <li id="register" class="clickable">Rejestracja</li>
+          <li><a href="./cards.php">Gra w oczko</a></li>
         </ul>
       </nav>
       <div class="content rounded-corners">
