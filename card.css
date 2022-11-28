@@ -37,6 +37,8 @@ main {
   display: flex;
   align-items: center;
   padding: 2rem 2rem;
+  flex-wrap: wrap;
+  max-width: 950px;
 }
 
 .card {
@@ -81,4 +83,26 @@ h3 {
 
 .styled-button:hover {
   background-color: hsl(84, 40%, 35%);
+}
+
+.lose {
+  background-color: red;
+}
+
+.win {
+  background-color: green;
+}
+
+.draw {
+  background-color: hsl(39, 100%, 40%);
+}
+
+.info-box {
+  padding: 1rem 1rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+}
+
+.info-box p {
+  font-weight: 600;
 }
