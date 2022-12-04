@@ -8,7 +8,7 @@
 main {
   min-height: 100vh;
   min-width: 100vw;
-  background: no-repeat url("assets/bg.jpg");
+  background: no-repeat url("../assets/bg.jpg");
   color: white;
   background-size: cover;
   display: flex;
@@ -18,7 +18,7 @@ main {
 }
 
 .board {
-  background: no-repeat url("assets/board.jpg");
+  background: no-repeat url("../assets/board.jpg");
   background-size: contain;
   min-width: 950px;
   object-fit: contain;

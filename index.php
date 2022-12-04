@@ -1,6 +1,7 @@
 <?php
   session_start();
   $_SESSION["CARD_STATUS"] = "INIT";
+  unset($_SESSION["formatText"]);
   $MAX_DISPLAYED_POSTS = 4;
   $postsPage = 0;
 
@@ -33,7 +34,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="icon" href="assets/logo-white.png" />
@@ -58,7 +59,7 @@
               <input name="email" type="email" label="Email"/>
             </div>
             <div class="input-label">
-              <label for="email">Tresc:</label>
+              <label for="tresc">Tresc:</label>
               <textarea name="tresc" label="Tresc"></textarea>
             </div>
             <button class="styled-button margin-top-20" type="submit">Wyslij</button>
@@ -123,7 +124,8 @@
           <li><a href="#">React</a></li>
           <li><a href="#">CSS</a></li>
           <li id="register" class="clickable">Rejestracja</li>
-          <li><a href="./cards.php">Gra w oczko</a></li>
+          <li><a href="./cards.php"><strong>Gra w oczko 🃏</strong></a></li>
+          <li><a href="./add-post.php">Dodaj post</a></li>
         </ul>
       </nav>
       <div class="content rounded-corners">

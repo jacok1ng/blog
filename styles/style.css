@@ -11,7 +11,7 @@
 }
 
 body {
-  background: no-repeat url("assets/bg.jpg");
+  background: no-repeat url("../assets/bg.jpg");
   color: white;
   background-size: cover;
 }
