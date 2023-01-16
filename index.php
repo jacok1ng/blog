@@ -1,31 +1,29 @@
 <?php
   session_start();
+
+  // === DATABASE ===
+  $servername = "localhost";
+  $username = "admin";
+  $password = "qwerty123";
+  $dbname = "blog";
+
+  // Create connection
+  $conn = new mysqli($servername, $username, $password, $dbname);
+
+  // Check connection
+  if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+  }
+  $_SESSION['conn'] = $conn;
+  //=================
+
   $_SESSION["CARD_STATUS"] = "INIT";
   unset($_SESSION["formatText"]);
-  $MAX_DISPLAYED_POSTS = 4;
+  unset($_SESSION['edit']);
+  $MAX_DISPLAYED_POSTS = 5;
   $postsPage = 0;
 
-  class Post{
-    public string $title;
-    public string $description;
-    public $comments = null;
-
-    function __construct(string $title, string $description){
-      $this->title = $title;
-      $this->description = $description;
-    }
-  }
-
-  $posts = [
-    new Post("Example title 1", "1 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi libero neque recusandae in nesciunt? Sit accusantium labore ad nam praesentium."),
-    new Post("Example title 2", "2 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi libero neque recusandae in nesciunt? Sit accusantium labore ad nam praesentium."),
-    new Post("Example title 3", "3 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi libero neque recusandae in nesciunt? Sit accusantium labore ad nam praesentium."),
-    new Post("Example title 4", "4 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi libero neque recusandae in nesciunt? Sit accusantium labore ad nam praesentium."),
-    new Post("Example title 5", "5 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi libero neque recusandae in nesciunt? Sit accusantium labore ad nam praesentium."),
-    new Post("Example title 6", "6 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi libero neque recusandae in nesciunt? Sit accusantium labore ad nam praesentium."),
-    new Post("Example title 7", "7 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi libero neque recusandae in nesciunt? Sit accusantium labore ad nam praesentium."),
-    new Post("Example title 8", "8 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi libero neque recusandae in nesciunt? Sit accusantium labore ad nam praesentium."),
-  ];
+  $isLogged = isset($_SESSION['logged']) ? $_SESSION['logged'] : false;
 ?>
 
 <!DOCTYPE html>
@@ -66,6 +64,7 @@
             <button class="styled-button close-btn margin-top-10">Zamknij</button>
           </form>
         </div>
+        <!-- register -->
         <div id="register-form">
           <form id="register-formula" action="register.php" method="post">
             <div class="input-label">
@@ -108,6 +107,23 @@
             <button class="styled-button close-btn margin-top-10">Zamknij</button>
           </form>
         </div>
+        <!--  -->
+        <!-- login -->
+        <div id="login-form">
+          <form id="login-formula" action="login.php" method="post">
+            <div class="input-label">
+              <label for="nick">Nick:</label>
+              <input id="login-nick" name="nick" type="text" label="Nick"/>
+            </div>
+            <div class="input-label">
+              <label for="password">Haslo:</label>
+              <input id="login-password" name="password" type="password" label="password"/>
+            </div>
+            <button id="login-btn" class="styled-button margin-top-20" type="submit">Wyslij</button>
+            <button class="styled-button close-btn margin-top-10">Zamknij</button>
+          </form>
+        </div>
+        <!--  -->
       </div>
     </div>
     <header>
@@ -118,14 +134,32 @@
     </header>
     <main>
       <nav class="rounded-corners">
+        <?php
+          if($isLogged){
+            echo '<div class="user-info">';
+            echo '<img src="./assets/avatar.png" alt="avatar" width="40" height="40">';
+            echo '<div>';
+            echo '<p><strong>'.$_SESSION['nickname'].' (ID:'.$_SESSION['id'].')</strong></p>';
+            echo '<a href="./logout.php" class="red-font small-text">Wyloguj</a>';
+            echo '</div>';
+            echo '</div>';
+          }
+        ?>
         <ul class="navigation-list">
           <li><a href="#">Strona główna</a></li>
           <li><a href="#">JavaScript</a></li>
           <li><a href="#">React</a></li>
           <li><a href="#">CSS</a></li>
           <li id="register" class="clickable">Rejestracja</li>
+          <?php
+            if(!$isLogged)
+            echo '<li id="login" class="clickable">Logowanie</li>';
+          ?>
           <li><a href="./cards.php"><strong>Gra w oczko 🃏</strong></a></li>
-          <li><a href="./add-post.php">Dodaj post</a></li>
+          <?php
+            if($isLogged)
+              echo '<li><a href="./add-post.php">Dodaj post</a></li>';
+          ?>
         </ul>
       </nav>
       <div class="content rounded-corners">
@@ -135,22 +169,33 @@
         </div>
         <div class="main-posts">
           <?php
-            $pages = ceil(count($posts) / $MAX_DISPLAYED_POSTS);
-            $counter = count($posts) > $MAX_DISPLAYED_POSTS ? $MAX_DISPLAYED_POSTS : count($posts);
-            $postsOffset = (isset($_GET['postsPage']) && is_numeric($_GET['postsPage'])) ? ($_GET['postsPage'] * $MAX_DISPLAYED_POSTS) : 0;
-
-            for($i = 0; $i < $counter; $i++){
-              if(($i + $postsOffset) > (count($posts) - 1)) break;
+            $sql = "SELECT * FROM posts";
+            $result = $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+            $mysqlCounter = count($result) > $MAX_DISPLAYED_POSTS ? $MAX_DISPLAYED_POSTS : count($result);
+            $offset = (isset($_GET['postsPage']) && is_numeric($_GET['postsPage'])) ? ($_GET['postsPage'] * $MAX_DISPLAYED_POSTS) : 0;
+            
+            for($i = 0; $i < $mysqlCounter; $i++){
+              if(($i + $offset) > (count($result) - 1)) break;
               echo '<div class="main-post">';
               echo '<img src="./assets/post.png" alt="">';
               echo '<div class="main-post-info">';
-              echo '<div class="main-post-title">', $posts[$i + $postsOffset]->title, '</div>';
-              echo '<div class="main-post-desc">', $posts[$i + $postsOffset]->description, '</div>';
-              echo '<div class="add-comment">Dodaj komentarz</div>';
+              echo '<div class="main-post-title">', $result[$i + $offset]['Title'], '</div>';
+              echo '<div class="main-post-desc">', $result[$i + $offset]['Content'], '</div>';
+              echo '<div class="additional-actions">';
+              if($isLogged){
+                echo '<div class="add-comment clickable">Dodaj komentarz</div>';
+                //RoleId 2 == ADMIN
+                if($result[$i + $offset]['UserID'] == $_SESSION['id'] || $_SESSION['roleId'] == 2){
+                  echo '<a href="./delete-post.php?postId='.$result[$i + $offset]['PostID'].'"><span class="clickable">Usun</span></a>';
+                  echo '<a href="./add-post.php?postId='.$result[$i + $offset]['PostID'].'&edit=true"><span class="clickable">Edytuj</span></a>';
+                }
+              }
+              echo '</div>';
               echo '</div>';
               echo '</div>';
             }
-
+            
+            $pages = ceil(count($result) / $MAX_DISPLAYED_POSTS);
             if($pages > 1){
               echo '<ul class="pagination">';
               echo '>> ';
@@ -167,13 +212,13 @@
         <h3>Ostatnie posty</h3>
         <div class="posts">
           <?php
-            $counter = count($posts) > $MAX_DISPLAYED_POSTS ? $MAX_DISPLAYED_POSTS : count($posts);
+            $counter = count($result) > $MAX_DISPLAYED_POSTS ? $MAX_DISPLAYED_POSTS : count($result);
             for($i = 0; $i < $counter; $i++){
               echo '<div class="post rounded-corners">';
               echo '<div class="post-thumbnail">';
               echo '<img src="assets/example_thumbnail.jpg" alt="" />';
               echo '</div>';
-              echo '<div class="post-description">',$posts[$i]->description,'</div>';
+              echo '<div class="post-description">',$result[$i]['Content'],'</div>';
               echo '</div>';
             }
           ?>

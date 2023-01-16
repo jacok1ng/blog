@@ -203,7 +203,8 @@ a {
   display: none;
 }
 
-#register-form {
+#register-form,
+#login-form {
   display: none;
 }
 
@@ -259,16 +260,7 @@ textarea {
 }
 
 .add-comment {
-  margin-top: 10px;
-  font-weight: 800;
   cursor: pointer;
-  transition: all 0.5s;
-}
-
-.add-comment:hover {
-  scale: 1.05;
-  transform: translateX(2%);
-  color: hsl(0, 0%, 85%);
 }
 
 .backdrop {
@@ -282,6 +274,34 @@ textarea {
 
 .clickable {
   cursor: pointer;
+  transition: all 0.3s;
+}
+
+.clickable:hover {
+  color: hsl(0, 0%, 85%);
+}
+
+.red-font {
+  color: red;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.small-text {
+  font-size: 0.8rem;
+}
+
+.additional-actions {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: 800;
 }
 
 ::-webkit-scrollbar {

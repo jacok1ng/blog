@@ -2,14 +2,20 @@ const backdrop = document.querySelector(".backdrop")
 const closeBtn = document.querySelectorAll(".close-btn")
 const addCommentElements = document.querySelectorAll(".add-comment")
 const registerBtn = document.querySelector("#register")
+const loginBtn = document.querySelector("#login")
 const commentForm = document.querySelector("#comment-form")
 const registerForm = document.querySelector("#register-form")
+const loginForm = document.querySelector("#login-form")
 //Register
 const regNick = document.querySelector("#reg-nick")
 const regPassword = document.querySelector("#reg-password")
 const regEmail = document.querySelector("#reg-email")
 const captchaInput = document.querySelector('input[name="captcha-input"]')
 const submitRegister = document.querySelector("#register-btn")
+//Login
+const loginNick = document.querySelector("#login-nick")
+const loginPassword = document.querySelector("#login-password")
+const loginEmail = document.querySelector("#login-email")
 
 const MIN_INPUT_LENGTH = 5
 const emailRegex = new RegExp(
@@ -56,7 +62,7 @@ addCommentElements.forEach((item) =>
     backdrop.style.display = "block"
     commentForm.style.display = "block"
     registerForm.style.display = "none"
-    console.log("elo", commentForm.style.display)
+    loginForm.style.display = "none"
   })
 )
 
@@ -71,4 +77,12 @@ registerBtn.addEventListener("click", () => {
   backdrop.style.display = "block"
   registerForm.style.display = "block"
   commentForm.style.display = "none"
+  loginForm.style.display = "none"
+})
+
+loginBtn.addEventListener("click", () => {
+  backdrop.style.display = "block"
+  loginForm.style.display = "block"
+  commentForm.style.display = "none"
+  registerForm.style.display = "none"
 })
