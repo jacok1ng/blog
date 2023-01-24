@@ -21,7 +21,7 @@
   $_SESSION["CARD_STATUS"] = "INIT";
   unset($_SESSION["formatText"]);
   unset($_SESSION['edit']);
-  $MAX_DISPLAYED_POSTS = 5;
+  $MAX_DISPLAYED_POSTS = 4;
   $postsPage = 0;
 
   $isLogged = isset($_SESSION['logged']) ? $_SESSION['logged'] : false;

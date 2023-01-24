@@ -19,6 +19,7 @@
       $sql = "INSERT INTO `comments`(`PostID`, `Content`) VALUES ('".$postId."','".$comment."')";
       $conn->query($sql);
     }
+    header("Location: http://localhost/Strona/index.php?postsPage=0");
     unset($_SESSION['postId']);
   }
 ?>
