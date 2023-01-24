@@ -237,7 +237,8 @@ a {
   gap: 2px;
 }
 
-.input-label input,
+.input-label,
+input,
 textarea {
   padding: 5px 10px;
 }

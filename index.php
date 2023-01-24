@@ -1,5 +1,6 @@
 <?php
   session_start();
+  require 'utils.php';
 
   // === DATABASE ===
   $servername = "localhost";
@@ -24,6 +25,7 @@
   $postsPage = 0;
 
   $isLogged = isset($_SESSION['logged']) ? $_SESSION['logged'] : false;
+  $userRole = isset($_SESSION['roleId']) ? $_SESSION['roleId'] : 0;
 ?>
 
 <!DOCTYPE html>
@@ -150,7 +152,12 @@
           <li><a href="#">JavaScript</a></li>
           <li><a href="#">React</a></li>
           <li><a href="#">CSS</a></li>
+          <li><a href="./contact.php">Formularz kontaktowy</a></li>
           <li id="register" class="clickable">Rejestracja</li>
+          <?php
+            if($isLogged && $userRole == 2)
+              echo '<li><a href="./admin-panel.php"><span class="red-font">Panel administratora</span></a></li>';
+          ?>
           <?php
             if(!$isLogged)
             echo '<li id="login" class="clickable">Logowanie</li>';
@@ -180,10 +187,12 @@
               echo '<img src="./assets/post.png" alt="">';
               echo '<div class="main-post-info">';
               echo '<div class="main-post-title">', $result[$i + $offset]['Title'], '</div>';
-              echo '<div class="main-post-desc">', $result[$i + $offset]['Content'], '</div>';
+              echo '<div class="main-post-desc">', transformText($result[$i + $offset]['Content']), '</div>';
               echo '<div class="additional-actions">';
+              echo '<a href="./add-comment.php?postId='.$result[$i + $offset]['PostID'].'"><span class="clickable">Dodaj komentarz</span></a>';
+              echo '<a href="./all-comments.php?postId='.$result[$i + $offset]['PostID'].'"><span class="clickable">Wyswietl komentarze</span></a>';
               if($isLogged){
-                echo '<div class="add-comment clickable">Dodaj komentarz</div>';
+                // echo '<div class="add-comment clickable">Dodaj komentarz</div>';
                 //RoleId 2 == ADMIN
                 if($result[$i + $offset]['UserID'] == $_SESSION['id'] || $_SESSION['roleId'] == 2){
                   echo '<a href="./delete-post.php?postId='.$result[$i + $offset]['PostID'].'"><span class="clickable">Usun</span></a>';
